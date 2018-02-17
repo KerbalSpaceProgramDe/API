@@ -84,9 +84,27 @@ class ShoutboxController extends Controller
 
         $this->validate($request, $rules);
 
+
+        $userId = -1;
+        $userName = $request->input('username');
+
+        if ($request->has('discordId')) {
+
+            $discordId = $request->input('discordId');
+
+            $user = DB::table('wcf1_user')->where('discordId', $discordId)->first();
+
+            if (!is_null($user)) {
+                $userId = $user->userID;
+                $userName = $user->username;
+            }
+
+        }
+
+
         $entry = Shoutbox::create([
-            'userID' => -1,
-            'username' => $request->input('username'),
+            'userID' => $userId,
+            'username' => $userName,
             'message' => $request->input('message'),
             'time' => Carbon::now()->timestamp,
             'ipAddress' => $request->ip(),
