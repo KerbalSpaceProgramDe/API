@@ -20,19 +20,6 @@ class Wcf1ShoutboxEntry extends Migration
                 $table->boolean('syncWithExternalServices')->default(1);
             });
 
-        } else {
-
-            Schema::create('wcf1_shoutbox_entry', function (Blueprint $table) {
-                $table->increments('entryID');
-                $table->integer('userID');
-                $table->string('username');
-                $table->timestamp('time');
-                $table->mediumText('message');
-                $table->string('ipAddress', 40);
-                $table->boolean('fromApi');
-                $table->boolean('syncWithExternalServices');
-            });
-
         }
     }
 
