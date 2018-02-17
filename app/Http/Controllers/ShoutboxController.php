@@ -45,11 +45,12 @@ class ShoutboxController extends Controller
 
 
         $entries = Shoutbox::when($since, function ($query) use ($since) {
-            return $query->where('time', '>', $since);
-        })
+                return $query->where('time', '>', $since);
+            })
             ->when(isset($fromApi), function ($query) use ($fromApi) {
                 return $query->where('fromApi', $fromApi);
             })
+            ->where('syncWithExternalServices', 1)
             ->limit(1000)->get();
 
         return $this->showAll($entries);
@@ -63,8 +64,7 @@ class ShoutboxController extends Controller
      */
     public function show($id)
     {
-        $entry = Shoutbox::findOrFail($id);
-
+        $entry = Shoutbox::where('syncWithExternalServices', 1)->findOrFail($id);
         return $this->showOne($entry);
     }
 
@@ -108,7 +108,8 @@ class ShoutboxController extends Controller
             'message' => $request->input('message'),
             'time' => Carbon::now()->timestamp,
             'ipAddress' => $request->ip(),
-            'fromApi' => true
+            'fromApi' => true,
+            'syncWithExternalServices' => 1
         ]);
 
         return $this->showOne($entry, 201);

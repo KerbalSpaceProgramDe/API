@@ -17,6 +17,7 @@ class Wcf1ShoutboxEntry extends Migration
 
             Schema::table('wcf1_shoutbox_entry', function (Blueprint $table) {
                 $table->boolean('fromApi')->default(0);
+                $table->boolean('syncWithExternalServices')->default(1);
             });
 
         } else {
@@ -29,6 +30,7 @@ class Wcf1ShoutboxEntry extends Migration
                 $table->mediumText('message');
                 $table->string('ipAddress', 40);
                 $table->boolean('fromApi');
+                $table->boolean('syncWithExternalServices');
             });
 
         }
@@ -43,6 +45,7 @@ class Wcf1ShoutboxEntry extends Migration
     {
         Schema::table('wcf1_shoutbox_entry', function (Blueprint $table) {
             $table->dropColumn('fromApi');
+            $table->dropColumn('syncWithExternalServices');
         });
     }
 }
