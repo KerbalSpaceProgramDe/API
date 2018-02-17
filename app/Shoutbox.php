@@ -20,5 +20,6 @@ class Shoutbox extends Model
     protected $table = 'wcf1_shoutbox_entry';
     protected $primaryKey = 'entryID';
     public $timestamps = false;
+    protected $hidden = ['ipAddress'];
 
 }

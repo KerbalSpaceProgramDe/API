@@ -44,16 +44,15 @@ class ShoutboxController extends Controller
         }
 
 
-
-        return DB::table('wcf1_shoutbox_entry')
-            ->when($since, function ($query) use ($since) {
-                return $query->where('time', '>', $since);
-            })
+        $entries = Shoutbox::when($since, function ($query) use ($since) {
+            return $query->where('time', '>', $since);
+        })
             ->when(isset($fromApi), function ($query) use ($fromApi) {
                 return $query->where('fromApi', $fromApi);
             })
             ->limit(1000)->get();
 
+        return $this->showAll($entries);
     }
 
     /**
