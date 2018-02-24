@@ -14,12 +14,15 @@ use Illuminate\Http\Request;
 */
 
 
+// Shoutbox
 
 Route::get('/shoutbox','ShoutboxController@index');
 Route::get('/shoutbox/{id}','ShoutboxController@show');
-
 Route::post('/shoutbox','ShoutboxController@store');
 
+// Ticker
+
+Route::get('/ticker', 'NewstickerController@index');
 
 // 404 Route
 Route::fallback(function(){
